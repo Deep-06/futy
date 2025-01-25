@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SlEarphonesAlt } from "react-icons/sl";
+import { UserProfile } from './UserProfile';
 
-export const Navbar = ({ handleProfileClick, scrolling, profileAnimation }) => {
+export const Navbar = ({ isScrolling,profileAnimation }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleProfileClick = () => {
+    setShowDropdown(!showDropdown);
+  };
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', padding:'1%', paddingRight:'5%', paddingLeft:'5%' }} className={`header ${scrolling ? 'minimized' : ''}`}>
+    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '1%', paddingRight: '5%', paddingLeft: '5%' }} className={`header ${isScrolling ? 'minimized' : ''}`}>
 
       <div style={styles.container}>
         <img onClick={handleProfileClick} className={`profile-pic  ${profileAnimation}`} style={styles.img}
           src='https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png' alt='Profile pic' />
 
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        {showDropdown && <UserProfile/> }
+
+        <div style={styles.center}>
           <div style={styles.coin}>
             <div style={styles.f}>F</div>
             <p style={{ fontSize: '35px', fontWeight: 'bold' }}>50</p>
@@ -19,8 +28,10 @@ export const Navbar = ({ handleProfileClick, scrolling, profileAnimation }) => {
       </div>
 
       <div style={styles.container}>
-        <div style={{ border:'2px solid white', width:'60px', height:'60px', display:'flex',justifyContent:'center',
-        alignItems:'center', borderRadius:'50%'}}><SlEarphonesAlt size='50%'/></div>
+        <div style={{
+          border: '2px solid white', width: '60px', height: '60px', display: 'flex', justifyContent: 'center',
+          alignItems: 'center', borderRadius: '50%'
+        }}><SlEarphonesAlt size='50%' /></div>
         <button style={styles.button}>How to play</button>
       </div>
 
@@ -30,16 +41,17 @@ export const Navbar = ({ handleProfileClick, scrolling, profileAnimation }) => {
 
 const styles = {
   container: {
-    display: 'flex', 
+    display: 'flex',
     justifyContent: 'space-between',
-    alignItems:'center',
-    width:'250px'
+    alignItems: 'center',
+    width: '250px',
+    position: 'relative', 
   },
   img: {
-        width: "30%",
-        borderRadius: '50%',
-        cursor: 'pointer',
-    },
+    width: "30%",
+    borderRadius: '50%',
+    cursor: 'pointer',
+  },
   coin: {
     display: 'flex',
     justifyContent: 'space-evenly',
@@ -75,6 +87,12 @@ const styles = {
     fontSize: '20px',
     fontWeight: 'bold',
     border: '1px solid white',
-    
-  }
+
+  },
+  center: {
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+ 
 }

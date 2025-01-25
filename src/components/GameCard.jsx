@@ -44,7 +44,7 @@ const styles = {
         justifyContent: 'space-evenly', 
         alignItems: 'center', 
         gap: '5px',
-        width: '35%', 
+        width: '120px', 
         backgroundColor: 'white', 
         borderRadius: '20px', 
         height: '45px', 

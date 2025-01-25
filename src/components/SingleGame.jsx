@@ -1,27 +1,42 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { FaSearch } from "react-icons/fa";
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { matches } from '../utils/data';
+import { UserProfile } from './UserProfile';
 
 
-export const SingleGame = ({ scrolling, handleProfileClick, profileAnimation }) => {
+export const SingleGame = ({profileAnimation }) => {
   const [searchActive, setSearchActive] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showHamburger, setShowHamburger] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
   const match = matches.find((m) => m.id === parseInt(id));
 
-    const handleSearchClick = () => {
-      setSearchActive((prev) => !prev);
-    };
+  const handleSearchClick = () => {
+    setSearchActive(!searchActive);
+  };
+
+  const handleProfileClick = () => {
+    setShowDropdown(!showDropdown);
+  };  
+
+  const handleHamburgerClick = () => {
+    setShowHamburger(!showHamburger);
+  };
+
 
   return (
-    <div style={{height:'100vh'}}>
+    <div style={{ height: '100%' }}>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '1%', paddingRight: '5%', paddingLeft: '5%' }} className={`header ${scrolling ? 'minimized' : ''}`}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '1%', paddingRight: '5%', paddingLeft: '5%' }} >
 
         <div style={styles.container}>
           <img onClick={handleProfileClick} className={`profile-pic  ${profileAnimation}`} style={styles.img}
             src='https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png' alt='Profile pic' />
+
+          {showDropdown && <UserProfile/> }
 
           <div style={styles.center}>
             <div style={styles.coin}>
@@ -38,15 +53,22 @@ export const SingleGame = ({ scrolling, handleProfileClick, profileAnimation }) 
               <input
                 type="text"
                 placeholder="Search"
-                style={{padding:'5px'}}
+                style={{ padding: '5px' }}
               />
             ) : (
               <div className="search-icon" onClick={handleSearchClick}>
-                <FaSearch size={'50%'} />
+                <FaSearch size={'40%'} />
               </div>
             )}
           </div>
-          <button style={styles.button}><GiHamburgerMenu size='50%' /></button>
+          <button onClick={handleHamburgerClick} style={styles.button}><GiHamburgerMenu size='50%' /></button>
+
+          {showHamburger && <div style={styles.dropdown}>
+            <div style={styles.dropdownItem}>User</div>
+            <div style={styles.dropdownItem} onClick={()=>navigate('/')}>Game</div>
+            <div style={styles.dropdownItem}>Coin</div>
+        </div>}
+
         </div>
 
       </div>
@@ -65,7 +87,7 @@ export const SingleGame = ({ scrolling, handleProfileClick, profileAnimation }) 
               <img style={styles.img} src={match.team1.logo} alt='team1' />
               <p style={styles.name}>{match.team1.name}</p>
             </div>
-            <div style={{ width: '90%', }}>
+            <div style={{ width: '90%',  }}>
               <p>{match.date}</p>
               <p style={styles.time}>{match.time}</p>
             </div>
@@ -74,7 +96,7 @@ export const SingleGame = ({ scrolling, handleProfileClick, profileAnimation }) 
               <p style={styles.name}>{match.team2.name}</p>
             </div>
           </div>
-          <div style={styles.desc}>Game Description <br/> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos mollitia ratione, minus distinctio numquam cumque incidunt ducimus, reiciendis
+          <div style={styles.desc}> <strong>Game Description</strong> <br /><br /> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos mollitia ratione, minus distinctio numquam cumque incidunt ducimus, reiciendis
             aliquid quas animi doloremque nostrum libero, cupiditate nisi ex reprehenderit commodi consectetur?
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor facilis at, placeat magnam ullam perspiciatis reprehenderit. Voluptatum laborum iste
             aliquam natus, reprehenderit, fugit eius totam officiis dolorem modi ex nesciunt!</div>
@@ -92,9 +114,10 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '300px',
+    position: 'relative', 
   },
   img: {
-    width: "30%",
+    width: "25%",
     borderRadius: '50%',
     cursor: 'pointer',
   },
@@ -137,7 +160,7 @@ const styles = {
     borderTop: '15px solid white',
     position: 'relative',
     paddingTop: '50px',
-    width:'70%'
+    width: '70%'
   },
   game: {
     display: 'flex',
@@ -181,10 +204,33 @@ const styles = {
     fontWeight: 'bold',
   },
   desc: {
-    fontSize: '25px',
-    padding:'5%'
+    fontSize: '20px',
+    padding: '3%',
+    textAlign:'justify'
   },
-  center:{
-display: 'flex', justifyContent: 'center', alignItems: 'center'
-  }
+  center: {
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  dropdown: {
+        position: 'absolute',
+        top: '60px',
+        right: '0',
+        backgroundColor: '#fff',
+        boxShadow: '0px 4px 8px rgba(0,0,0,0.1)',
+        padding: '10px',
+        borderRadius: '8px',
+        minWidth: '80px',
+        zIndex: 10,
+      },
+      dropdownItem: { 
+        // marginBottom: '5px', 
+        fontSize: '20px', 
+        fontWeight:'bold',
+        color: 'black' ,
+        textAlign:'left',
+        padding:'5px',
+        cursor: 'pointer',
+    },
 }

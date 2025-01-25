@@ -3,9 +3,10 @@ import { matches } from '../utils/data';
 import { Navbar } from './Navbar';
 import { GameCard } from './GameCard';
 import { Footer } from './Footer';
+import { FaCircle } from 'react-icons/fa6';
 export const Home = () => {
-  const [searchActive, setSearchActive] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
+    
 
   useEffect(() => {
     let timeout;
@@ -28,29 +29,20 @@ export const Home = () => {
     };
   }, []);
 
-  const handleProfileClick = () => {
-    console.log('Profile clicked!');
-  };
-
-  const handleSearchClick = () => {
-    setSearchActive(!searchActive);
-  };
-
-
 
   return (
     <div>
-    {!isScrolling && <Navbar
-      searchActive={searchActive}
-      handleSearchClick={handleSearchClick}
-      handleProfileClick={handleProfileClick}
-      scrolling={isScrolling}
-    />}
+      {/* navbar */}
+      {!isScrolling && <Navbar
+        isScrolling={isScrolling}
+      />}
+
+      {/* Matches list */}
 
       <div style={styles.matchContainer}>
         <div style={styles.buttonContainer}>
           <button style={styles.button1}>Upcoming</button>
-          <button style={styles.button}>Live</button>
+          <button style={styles.button}> <FaCircle color='#99f32b' size={'15px'} /> Live</button>
           <button style={styles.button}>Completed</button>
         </div>
 
@@ -73,18 +65,15 @@ export const Home = () => {
             </div>
           ))}
         </div>
-
-
-
       </div>
 
 
-      {!isScrolling && 
-      <footer className={`footer ${isScrolling ? 'minimized' : ''}`}>
-      <Footer />
-      </footer>
-        
-     }
+      {!isScrolling &&
+        <footer className={`footer ${isScrolling ? 'minimized' : ''}`}>
+          <Footer />
+        </footer>
+
+      }
 
     </div>
   )
@@ -141,7 +130,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '40px',
+    padding: '10px',
 
   },
   dateHeading: {
