@@ -24,7 +24,7 @@ A sports match application built with React. It displays a list of football matc
 - Ensures that the layout works on both mobile and desktop screens.
 
 ## Mobile View
-<div style={{display:'flex'}}>
+<div style="display: flex; gap: 10px; justify-content: center;">
 <img src='./public//Images/Mobile_home.png' alt='singlegame'/>
 <img src='./public//Images/Mobile_singlecard.png' alt='singlegame'/>
 </div>
