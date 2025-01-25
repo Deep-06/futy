@@ -81,7 +81,7 @@ const styles = {
         borderBottom: '4px solid white',
     },
     img: {
-        width: "40%",
+        width: "50%",
         borderRadius: '50%',
     },
     name: {

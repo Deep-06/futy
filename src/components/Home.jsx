@@ -13,14 +13,13 @@ export const Home = () => {
   const handleScroll = () => {
     setIsScrolling(true);
 
-    // if(scrollTimeout) clearTimeout(scrollTimeout);
     if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
 
-    // Set a new timeout
     scrollTimeoutRef.current = setTimeout(() => {
       setIsScrolling(false);
     }, 500);
 
+    // if(scrollTimeout) clearTimeout(scrollTimeout);
     // const newTimeout = setTimeout(() => {
     //   setIsScrolling(false);
     // }, 500);
@@ -70,7 +69,8 @@ export const Home = () => {
         </Matches>
       </MatchContainer>
 
-      {!isScrolling && <Footer isScrolling={isScrolling} />}
+      {!isScrolling && <Footer  isScrolling={isScrolling} />}
+
       
     </Container>
     
@@ -189,14 +189,5 @@ const GamesColumn = styled.div`
   }
 `;
 
-// const FooterContainer = styled.footer`
-//   background-color: #000;
-//   color: white;
-//   text-align: center;
-//   transition: transform 0.3s ease-in-out;
 
-//   &.minimized {
-//     transform: translateY(100%); 
-//   }
-// `;
 
