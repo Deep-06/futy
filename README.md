@@ -24,11 +24,10 @@ A sports match application built with React. It displays a list of football matc
 - Ensures that the layout works on both mobile and desktop screens.
 
 ## Mobile View
-| ![Mobile Home](./public/Images/Mobile_home.png) | ![Mobile Single Card](./public/Images/Mobile_singlecard.png) |
-<!-- <div style="display: flex; gap: 10px; justify-content: center;">
-<img src='./public//Images/Mobile_home.png' alt='singlegame'/>
-<img src='./public//Images/Mobile_singlecard.png' alt='singlegame'/>
-</div> -->
+<div style="display: flex; gap: 10px; justify-content: center;">
+<img src='./public//Images/Mobile_home.png' width="300" alt='singlegame'/>
+<img src='./public//Images/Mobile_singlecard.png' width="300" alt='singlegame'/>
+</div>
 
 ## Tech Stack
 HTML | JavaScript | CSS | React | styled-components
