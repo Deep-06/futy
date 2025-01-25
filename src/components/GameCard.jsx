@@ -88,7 +88,7 @@ const styles = {
         fontSize: '20px',
         fontWeight: 'bold'
     }, time: {
-        fontSize: '22px',
+        fontSize: '20px',
         fontWeight: 'bold',
     },
     button: {

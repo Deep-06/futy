@@ -41,7 +41,7 @@ export const SingleGame = () => {
           <div style={styles.center}>
             <div style={styles.coin}>
               <div style={styles.f}>F</div>
-              <p style={{ fontSize: '35px', fontWeight: 'bold' }}>50</p>
+              <p style={{ fontSize: '30px', fontWeight: 'bold' }}>50</p>
             </div>
           </div>
 
@@ -53,7 +53,7 @@ export const SingleGame = () => {
               <input
                 type="text"
                 placeholder="Search"
-                style={{ padding: '5px', width:'150px' }}
+                style={{ padding: '5px', width:'100px' }}
               />
             ) : (
               <div className="search-icon" onClick={handleSearchClick}>
@@ -61,7 +61,7 @@ export const SingleGame = () => {
               </div>
             )}
           </div>
-          <button onClick={handleHamburgerClick} style={styles.button}><GiHamburgerMenu size='50%' /></button>
+          <button onClick={handleHamburgerClick} style={styles.button}><GiHamburgerMenu size='40%' /></button>
 
           {showHamburger && <div style={styles.dropdown}>
             <div style={styles.dropdownItem}>User</div>
@@ -120,9 +120,6 @@ const styles = {
     width: "25%",
     borderRadius: '50%',
     cursor: 'pointer',
-    '&:hover': {
-    transform: 'scale(1.1)',
-  },
   },
   coin: {
     display: 'flex',
@@ -131,7 +128,7 @@ const styles = {
     gap: '10px',
     backgroundColor: 'black',
     borderRadius: '40px',
-    height: '45px',
+    height: '40px',
     color: '#EC4C0E',
     border: '1px solid #EC4C0E',
     padding: '10px'

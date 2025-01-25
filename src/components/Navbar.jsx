@@ -59,7 +59,7 @@ const NavSection = styled.div`
   position: relative;
 
   @media (max-width: 768px) {
-    width: 100%;
+    width: 200px;
     justify-content: center;
   }
 `;
@@ -90,6 +90,12 @@ const CoinContainer = styled.div`
   &:hover {
     transform: scale(1.1);
   }
+
+  @media (max-width: 768px) {
+    height: 40px;
+    padding: 5px;
+    gap: 5px;
+  }
 `;
 
 const CoinText = styled.div`
@@ -109,6 +115,10 @@ const CoinText = styled.div`
 const CoinAmount = styled.p`
   font-size: 35px;
   font-weight: bold;
+
+  @media (max-width: 768px) {
+    font-size: 25px;
+  }
 `;
 
 const IconWrapper = styled.div`
@@ -125,8 +135,8 @@ const IconWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
 `;
 
