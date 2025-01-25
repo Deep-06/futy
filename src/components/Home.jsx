@@ -1,52 +1,55 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { matches } from '../utils/data';
 import { Navbar } from './Navbar';
 import { GameCard } from './GameCard';
 import { Footer } from './Footer';
 import { FaCircle } from 'react-icons/fa6';
+import styled from 'styled-components';
 export const Home = () => {
   const [isScrolling, setIsScrolling] = useState(false);
-    
+  // const [scrollTimeout, setScrollTimeout] = useState(null);
+  const scrollTimeoutRef = useRef(null);
+
+  const handleScroll = () => {
+    setIsScrolling(true);
+
+    // if(scrollTimeout) clearTimeout(scrollTimeout);
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+
+    // Set a new timeout
+    scrollTimeoutRef.current = setTimeout(() => {
+      setIsScrolling(false);
+    }, 500);
+
+    // const newTimeout = setTimeout(() => {
+    //   setIsScrolling(false);
+    // }, 500);
+
+    // setScrollTimeout(newTimeout);
+  };
 
   useEffect(() => {
-    let timeout;
-
-    const handleScroll = () => {
-      setIsScrolling(true);
-
-      clearTimeout(timeout);
-
-      timeout = setTimeout(() => {
-        setIsScrolling(false);
-      }, 1000);
-    };
-
     window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearTimeout(timeout);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
     };
   }, []);
 
 
   return (
-    <div>
-      {/* navbar */}
-      {!isScrolling && <Navbar
-        isScrolling={isScrolling}
-      />}
+    <Container>
+      {!isScrolling && <Navbar isScrolling={isScrolling} />}
 
-      {/* Matches list */}
+      <MatchContainer>
+        <ButtonContainer>
+          <ButtonPrimary>Upcoming</ButtonPrimary>
+          <ButtonSecondary> <FaCircle color='#99f32b' size={'15px'} /> Live</ButtonSecondary>
+          <ButtonSecondary>Completed</ButtonSecondary>
+        </ButtonContainer>
 
-      <div style={styles.matchContainer}>
-        <div style={styles.buttonContainer}>
-          <button style={styles.button1}>Upcoming</button>
-          <button style={styles.button}> <FaCircle color='#99f32b' size={'15px'} /> Live</button>
-          <button style={styles.button}>Completed</button>
-        </div>
-
-        <div className="matches" style={styles.matches}>
+        <Matches>
           {Object.entries(
             matches.reduce((acc, match) => {
               const date = match.date;
@@ -55,105 +58,145 @@ export const Home = () => {
               return acc;
             }, {})
           ).map(([date, games]) => (
-            <div key={date} style={styles.dateContainer}>
-              <div style={styles.dateHeading}>{date}</div>
-              <div style={styles.gamesColumn}>
+            <DateContainer key={date}>
+              <DateHeading>{date}</DateHeading>
+              <GamesColumn>
                 {games.map((match) => (
-                  <GameCard key={match.id} match={match} />
+                  <GameCard key={match.id} match={match}  />
                 ))}
-              </div>
-            </div>
+              </GamesColumn>
+            </DateContainer>
           ))}
-        </div>
-      </div>
+        </Matches>
+      </MatchContainer>
 
-
-      {!isScrolling &&
-        <footer className={`footer ${isScrolling ? 'minimized' : ''}`}>
-          <Footer />
-        </footer>
-
-      }
-
-    </div>
+      {!isScrolling && <Footer isScrolling={isScrolling} />}
+      
+    </Container>
+    
   )
 }
 
-const styles = {
-  matches: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',  // Center the entire match list
-    paddingLeft: '30px',
-    paddingRight: '30px'
+// Styled Components
+const Container = styled.div`
+  width: 100%;
 
-  },
-  matchContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderTop: '10px solid white',
+`;
 
-  },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    width: '40%',
-    padding: '20px',
-    marginTop: '20px'
-  },
-  button1: {
-    padding: '1rem 1rem',
-    border: 'none',
-    borderRadius: '10px',
-    backgroundColor: '#262525',
-    color: 'white',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s',
-    fontSize: '20px',
-  },
-  button: {
-    padding: '1rem 1rem',
-    border: '0.5px solid white',
-    borderRadius: '10px',
-    backgroundColor: 'black',
-    color: 'whiteSmoke',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s',
-    fontSize: '20px',
-    fontWeight: '5px'
-  },
-  dateContainer: {
-    position: 'relative',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '10px',
+const MatchContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-top: 10px solid white;
+  padding: 40px;
 
-  },
-  dateHeading: {
-    position: 'relative',
-    top: '25px',
-    backgroundColor: '#000',
-    color: '#fff',
-    fontSize: '22px',
-    fontWeight: 'bold',
-    padding: '10px 20px',
-    borderRadius: '50px',
-    textAlign: 'center',
-    border: '2px solid white'
-  },
-  gamesColumn: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: '25px',
-    borderTop: '1px solid white',
-    // position: 'relative',  
-    padding: '40px',
-    paddingTop: '80px',
-    width: '100%',
-
+  @media (max-width: 768px) {
+    padding: 10px;
   }
-}
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 40%;
+  padding: 20px;
+  margin-top: 20px;
+
+  @media (max-width: 768px) {
+    align-items: center;
+    gap: 10px;
+    width: 80%;
+  }
+`;
+
+const ButtonPrimary = styled.button`
+  padding: 1rem 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #262525;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+`;
+
+const ButtonSecondary = styled.button`
+  padding: 1rem 1rem;
+  border: 0.5px solid white;
+  border-radius: 10px;
+  background-color: black;
+  color: whiteSmoke;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 20px;
+  font-weight: 500;
+  opacity: 0.5;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+`;
+
+const Matches = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
+`;
+
+const DateContainer = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+`;
+
+const DateHeading = styled.div`
+  position: relative;
+  top: 25px;
+  background-color: #000;
+  color: #fff;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 50px;
+  text-align: center;
+  border: 2px solid white;
+`;
+
+const GamesColumn = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  padding: 40px;
+  padding-top: 80px;
+  width: 100%;
+  border-top: 1px solid white;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 20px;
+    padding-top: 80px;
+  }
+`;
+
+// const FooterContainer = styled.footer`
+//   background-color: #000;
+//   color: white;
+//   text-align: center;
+//   transition: transform 0.3s ease-in-out;
+
+//   &.minimized {
+//     transform: translateY(100%); 
+//   }
+// `;
+

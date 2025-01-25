@@ -6,7 +6,7 @@ import { matches } from '../utils/data';
 import { UserProfile } from './UserProfile';
 
 
-export const SingleGame = ({profileAnimation }) => {
+export const SingleGame = () => {
   const [searchActive, setSearchActive] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showHamburger, setShowHamburger] = useState(false);
@@ -28,12 +28,12 @@ export const SingleGame = ({profileAnimation }) => {
 
 
   return (
-    <div style={{ height: '100%' }}>
+    <div style={{ minHeight:'100vh' }}>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '1%', paddingRight: '5%', paddingLeft: '5%' }} >
 
         <div style={styles.container}>
-          <img onClick={handleProfileClick} className={`profile-pic  ${profileAnimation}`} style={styles.img}
+          <img onClick={handleProfileClick}  style={styles.img}
             src='https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png' alt='Profile pic' />
 
           {showDropdown && <UserProfile/> }
@@ -53,7 +53,7 @@ export const SingleGame = ({profileAnimation }) => {
               <input
                 type="text"
                 placeholder="Search"
-                style={{ padding: '5px' }}
+                style={{ padding: '5px', width:'150px' }}
               />
             ) : (
               <div className="search-icon" onClick={handleSearchClick}>
@@ -73,7 +73,7 @@ export const SingleGame = ({profileAnimation }) => {
 
       </div>
       {/* Single game */}
-      <div style={styles.center}>
+      <div  style={{ ...styles.center, padding:'20px'}}>
         <div style={styles.card}>
           <div style={styles.center}>
             <div style={styles.game}>
@@ -113,13 +113,16 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '300px',
+    width: '280px',
     position: 'relative', 
   },
   img: {
     width: "25%",
     borderRadius: '50%',
     cursor: 'pointer',
+    '&:hover': {
+    transform: 'scale(1.1)',
+  },
   },
   coin: {
     display: 'flex',
@@ -167,7 +170,7 @@ const styles = {
     justifyContent: 'space-evenly',
     alignItems: 'center',
     gap: '5px',
-    width: '20%',
+    width: '150px',
     backgroundColor: 'white',
     borderRadius: '20px',
     height: '65px',
@@ -211,7 +214,7 @@ const styles = {
   center: {
     display: 'flex', 
     justifyContent: 'center', 
-    alignItems: 'center'
+    alignItems: 'center',
   },
   dropdown: {
         position: 'absolute',
@@ -225,7 +228,6 @@ const styles = {
         zIndex: 10,
       },
       dropdownItem: { 
-        // marginBottom: '5px', 
         fontSize: '20px', 
         fontWeight:'bold',
         color: 'black' ,

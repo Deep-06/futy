@@ -1,10 +1,12 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
 
 export const GameCard = ({ match }) => {
     const navigate = useNavigate();
     return (
-        <div style={styles.card}>
+        <Card>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <div style={styles.container}>
                     <div style={styles.f}>F</div>
@@ -18,7 +20,7 @@ export const GameCard = ({ match }) => {
                     <p style={styles.name}>{match.team1.name}</p>
                 </div>
                 <div style={{ width: '90%', }}>
-                    <p>{match.date}</p>
+                    <p>{match.date.split(' ').slice(0, 2).join(' ')}</p>
                     <p style={styles.time}>{match.time}</p>
                 </div>
                 <div>
@@ -26,33 +28,38 @@ export const GameCard = ({ match }) => {
                     <p style={styles.name}>{match.team2.name}</p>
                 </div>
             </div>
-            <button onClick={() =>navigate(`/game/${match.id}`)} style={styles.button}>JOIN GAME</button>
-        </div>
+            <button onClick={() => navigate(`/game/${match.id}`)} style={styles.button}>JOIN GAME</button>
+        </Card>
     )
 }
 
+const Card = styled.div`
+  background-color: #262525;
+  border-radius: 15px;
+  border-top: 15px solid white;
+  position: relative;
+  padding-top: 30px ;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
 const styles = {
-    card: {
-        backgroundColor: '#262525',
-        borderRadius: '15px',
-        borderTop: '15px solid white',
-        position: 'relative',  
-        paddingTop: '30px' 
-    },
     container: {
-        display: 'flex', 
-        justifyContent: 'space-evenly', 
-        alignItems: 'center', 
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
         gap: '5px',
-        width: '120px', 
-        backgroundColor: 'white', 
-        borderRadius: '20px', 
-        height: '45px', 
+        width: '120px',
+        backgroundColor: 'white',
+        borderRadius: '20px',
+        height: '45px',
         color: 'black',
-        position: 'absolute',   
-        top: '-30px',           
-        left: '50%',            
-        transform: 'translateX(-50%)', 
+        position: 'absolute',
+        top: '-30px',
+        left: '50%',
+        transform: 'translateX(-50%)',
     },
     f: {
         fontSize: '20px',
