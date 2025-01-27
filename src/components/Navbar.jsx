@@ -34,7 +34,7 @@ export const Navbar = ({ isScrolling, searchQuery, setSearchQuery }) => {
         
       </NavSection>
 
-      <NavSection style={{width:'60%'}}>
+      <NavSection style={{width:'58%'}}>
         <SearchContainer searchActive={searchActive}>
           {searchActive ? (
             <input type="text" placeholder="Search..." 
