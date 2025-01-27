@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { matches } from '../utils/data';
 import { Navbar } from './Navbar';
 import { GameCard } from './GameCard';
@@ -7,8 +7,19 @@ import { FaCircle } from 'react-icons/fa6';
 import styled from 'styled-components';
 export const Home = () => {
   const [isScrolling, setIsScrolling] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   // const [scrollTimeout, setScrollTimeout] = useState(null);
   const scrollTimeoutRef = useRef(null);
+
+  const filteredGames = useMemo(() => 
+    matches.filter(game => 
+      (game.team1.name?.toLowerCase().includes(searchQuery.toLowerCase()) || '') ||
+      (game.team2.name?.toLowerCase().includes(searchQuery.toLowerCase()) || '') ||
+      (game.date?.toLowerCase().includes(searchQuery.toLowerCase()) || '')
+    ), 
+    [searchQuery, matches]
+  );
+
 
   const handleScroll = () => {
     setIsScrolling(true);
@@ -39,7 +50,7 @@ export const Home = () => {
 
   return (
     <Container>
-      {!isScrolling && <Navbar isScrolling={isScrolling} />}
+      {!isScrolling && <Navbar isScrolling={isScrolling} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />}
 
       <MatchContainer>
         <ButtonContainer>
@@ -50,7 +61,7 @@ export const Home = () => {
 
         <Matches>
           {Object.entries(
-            matches.reduce((acc, match) => {
+            filteredGames.reduce((acc, match) => {
               const date = match.date;
               if (!acc[date]) acc[date] = [];
               acc[date].push(match);
@@ -79,7 +90,7 @@ export const Home = () => {
 
 // Styled Components
 const Container = styled.div`
-  width: 100%;
+  /* width: 100%; */
 
 `;
 
@@ -139,7 +150,7 @@ const ButtonSecondary = styled.button`
   opacity: 0.5;
 
   @media (max-width: 768px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 

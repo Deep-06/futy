@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SlEarphonesAlt } from "react-icons/sl";
 import { UserProfile } from './UserProfile';
+import { FaSearch } from 'react-icons/fa';
 
-export const Navbar = ({ isScrolling}) => {
+export const Navbar = ({ isScrolling, searchQuery, setSearchQuery }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [searchActive, setSearchActive] = useState(false);
+
+
+  const handleSearchClick = () => {
+    setSearchActive(!searchActive);
+  };
 
   const handleProfileClick = () => {
     setShowDropdown(!showDropdown);
@@ -24,9 +31,23 @@ export const Navbar = ({ isScrolling}) => {
           <CoinText>F</CoinText>
           <CoinAmount>50</CoinAmount>
         </CoinContainer>
+        
       </NavSection>
 
-      <NavSection>
+      <NavSection style={{width:'60%'}}>
+        <SearchContainer searchActive={searchActive}>
+          {searchActive ? (
+            <input type="text" placeholder="Search..." 
+               value={searchQuery}
+               onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          ) : (
+            <div className="search-icon" onClick={handleSearchClick}>
+              <FaSearch />
+            </div>
+          )}
+        </SearchContainer>
+
         <IconWrapper>
           <SlEarphonesAlt size='50%' />
         </IconWrapper>
@@ -47,7 +68,9 @@ const Header = styled.div`
   background-color: #000;
 
   @media (max-width: 768px) {
-    padding: 2%;
+    padding: 1%;
+    padding-right: 1%;
+  padding-left: 1%;
   }
 `;
 
@@ -55,17 +78,18 @@ const NavSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 250px;
+  width: 400px;
   position: relative;
 
   @media (max-width: 768px) {
-    width: 200px;
+    width: 100%;
     justify-content: center;
+    gap:10px;
   }
 `;
 
 const ProfilePic = styled.img`
-  width: 30%;
+  width: 25%;
   border-radius: 50%;
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -123,8 +147,8 @@ const CoinAmount = styled.p`
 
 const IconWrapper = styled.div`
   border: 2px solid white;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,8 +159,8 @@ const IconWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
   }
 `;
 
@@ -157,8 +181,45 @@ const PlayButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    font-size: 16px;
-    padding: 0.8rem 1rem;
+    font-size: 10px;
+    padding: 0.5rem 0.5rem;
   }
 `;
 
+const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+
+  input {
+    padding: 5px 5px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: width 0.3s ease-in-out;
+    width: 180px;
+    background: white;
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 10px;
+    font-size: 30px;
+    color: #fff;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  @media (max-width: 768px) {
+    input {
+      width: 50px;
+    }
+    .search-icon {
+      font-size: 20px;
+    }
+  }
+`;
